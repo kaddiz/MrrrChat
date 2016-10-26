@@ -1,5 +1,6 @@
 import React from 'react';
 import RoomList from './RoomList';
+import Chat from './Chat';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -16,8 +17,8 @@ export default class ChatPage extends React.Component {
       <div className='chat-page'>
         <h1>MrrrChat</h1>
         <Row className="show-grid">
-          <Col xs={12} md={8}><code>&lt;{'Col xs={12} md={8}'} /&gt;</code></Col>
-          <Col xs={6} md={4}><RoomList /></Col>
+          <Col xs={12} md={8}><Chat /></Col>
+          <Col xs={12} md={4}><RoomList /></Col>
         </Row>
       </div>
     );
