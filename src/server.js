@@ -5,8 +5,14 @@ import { match, RouterContext } from 'react-router';
 import routes                   from './routes';
 import { Provider }             from 'react-redux';
 import configureStore           from './redux/configureStore';
+import http                     from 'http';
 
 const app = express();
+
+var socket = require('./socket.js');
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', socket);
 
 app.use((req, res) => {
   const store = configureStore();
@@ -48,6 +54,7 @@ function renderHTML(componentHTML) {
       </head>
       <body>
         <div id="root">${componentHTML}</div>
+        <script src="/socket.io/socket.io.js"></script>
         <script src="${assetUrl}/bundle.js"></script>
       </body>
     </html>

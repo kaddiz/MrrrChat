@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import ComponentReducer from './ComponentReducer';
+import ChatReducer from './ChatReducer';
 
 export default combineReducers({
-  componentReducer: ComponentReducer
+  chat: ChatReducer
 });
