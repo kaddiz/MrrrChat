@@ -40,7 +40,8 @@ module.exports = {
       }
     ]
   },
-  plugins: (ENV === "production" ? [
+  plugins: // (ENV === "production" ?
+  [
     // new webpack.ProvidePlugin({
     //   React: 'react',
     //   ReactDOM: 'react-dom',
@@ -49,23 +50,24 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({minimize: true, compress: { warnings: false }}),
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify("production")
+        NODE_ENV: JSON.stringify("development") // 
       }
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin()
-  ] : [
-    // new webpack.ProvidePlugin({
-    //   React: 'react',
-    //   ReactDOM: 'react-dom'
-    // }),
-    new ExtractTextPlugin("bundle.css"),
-    new webpack.DefinePlugin({
-      "process.env": {
-         NODE_ENV: JSON.stringify("development")
-       }
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
-  ])
+  ]
+  // : [
+  //   // new webpack.ProvidePlugin({
+  //   //   React: 'react',
+  //   //   ReactDOM: 'react-dom'
+  //   // }),
+  //   new ExtractTextPlugin("bundle.css"),
+  //   new webpack.DefinePlugin({
+  //     "process.env": {
+  //        NODE_ENV: JSON.stringify("development")
+  //      }
+  //   }),
+  //   new webpack.optimize.DedupePlugin(),
+  //   new webpack.optimize.OccurenceOrderPlugin()
+  // ])
 }
