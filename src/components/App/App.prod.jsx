@@ -21,14 +21,14 @@ export default class App extends React.Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to='/'>MrrrChat</Link>
+              <Link to='/'><b>MrrrChat</b></Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <LinkContainer to='/'>
-                <NavItem>Button</NavItem>
+              <LinkContainer to='/chat'>
+                <NavItem>Chat</NavItem>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

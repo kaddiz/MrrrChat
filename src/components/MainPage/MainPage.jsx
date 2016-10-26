@@ -9,7 +9,7 @@ export default class MainPage extends React.Component {
       <Jumbotron>
         <h1>Welcome to MrrrChat!</h1>
         <p>Status: 'development'</p>
-        <p><Link to='/'><Button bsStyle='primary'>Let's start!</Button></Link></p>
+        <p><Link to='/chat'><Button bsStyle='primary'>Let's start!</Button></Link></p>
       </Jumbotron>
     );
   }
