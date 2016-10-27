@@ -26,6 +26,11 @@ class Chat extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    var chat = document.getElementById('chat');
+    chat.scrollTop = chat.scrollHeight;
+  }
+
   componentDidMount() {
     socket.on('user:join', this.handleChatMessages);
     socket.on('message', this.handleChatMessages);
@@ -41,7 +46,7 @@ class Chat extends React.Component {
 
   handleMessageChange = (e) => {
     this.setState({
-      msg: e.target.value.trim()
+      msg: e.target.value
     });
   }
 
@@ -52,14 +57,20 @@ class Chat extends React.Component {
   }
 
   handleSendClick = (e) => {
+    var now = new Date();
     let message = {
       id: this.state.id,
       name: this.state.name,
-      msg: this.state.msg,
-      time: new Date().toLocaleDateString()
+      msg: this.state.msg.trim(),
+      time: now.toLocaleTimeString()
     };
     document.getElementById('textarea').value = '';
-    if (this.state.msg === '' | '\n') return false;
+    if (this.state.msg.trim() === '' | '\n') {
+      this.setState({
+        msg: ''
+      });
+      return false;
+    }
     socket.emit('message', message);
     this.setState({
       messages: this.state.messages.concat(message),
@@ -72,7 +83,7 @@ class Chat extends React.Component {
     return (
       <div className='chat'>
         <Panel header={chatName} bsStyle='primary'>
-          <ListGroup fill>
+          <ListGroup fill id='chat'>
           {
             this.state.messages.length > 0 ?
             this.state.messages.map((message) => {
