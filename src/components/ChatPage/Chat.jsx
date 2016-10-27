@@ -1,57 +1,96 @@
-import React          from 'react';
-import { connect }    from 'react-redux';
-import ListGroup      from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem  from 'react-bootstrap/lib/ListGroupItem';
-import Panel          from 'react-bootstrap/lib/Panel';
-import FormControl    from 'react-bootstrap/lib/FormControl';
-import Button         from 'react-bootstrap/lib/Button';
-
-import Message        from './Message';
-
-import getMessages   from 'redux/actions/ChatActions';
+import React           from 'react';
+import { connect }     from 'react-redux';
+import io              from 'socket.io-client';
+import ListGroup       from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem   from 'react-bootstrap/lib/ListGroupItem';
+import Panel           from 'react-bootstrap/lib/Panel';
+import FormGroup       from 'react-bootstrap/lib/FormGroup';
+import FormControl     from 'react-bootstrap/lib/FormControl';
+import Button          from 'react-bootstrap/lib/Button';
+import Message         from './Message';
+import { getMessages } from 'redux/actions/ChatActions';
 
 import './Chat.scss';
+
+var socket = io.connect('http://localhost:3000');//, {'transports': ['xhr-polling']});
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { messages: [] }
+    this.state = {
+      messages: [],
+      msg: '',
+      name: '',
+      id: Date.now() + Math.random()
+    }
   }
 
   componentDidMount() {
-
-    socket.on('user:join', (data) => {
-        let message = {
-          id: Date.now(),
-          name: 'System',
-          msg: `User ${data.name} has joined.`,
-          time: data.time
-        };
-        setState({
-          messages: messages.push(message)
-        });
-    });
-
+    socket.on('user:join', this.handleChatMessages);
+    socket.on('message', this.handleChatMessages);
+    socket.on('server:name', name => { this.setState({ name: name }) });
     this.props.dispatch(getMessages());
+  }
+
+  handleChatMessages = (message) => {
+    this.setState({
+      messages: this.state.messages.concat(message),
+    });
+  }
+
+  handleMessageChange = (e) => {
+    this.setState({
+      msg: e.target.value.trim()
+    });
+  }
+
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSendClick(e);
+    }
+  }
+
+  handleSendClick = (e) => {
+    let message = {
+      id: this.state.id,
+      name: this.state.name,
+      msg: this.state.msg,
+      time: new Date().toLocaleDateString()
+    };
+    document.getElementById('textarea').value = '';
+    if (this.state.msg === '' | '\n') return false;
+    socket.emit('message', message);
+    this.setState({
+      messages: this.state.messages.concat(message),
+      msg: ''
+    });
   }
 
   render() {
     var chatName = 'Default';
-
     return (
       <div className='chat'>
         <Panel header={chatName} bsStyle='primary'>
           <ListGroup fill>
           {
+            this.state.messages.length > 0 ?
             this.state.messages.map((message) => {
-              return <Message id={message.id} name={message.name} time={message.time} msg={message.msg} />
-            })
+              return <Message key={Math.random()} name={message.name} time={message.time} msg={message.msg} />;
+            }) : <ListGroupItem>Empty message list...</ListGroupItem>
           }
           </ListGroup>
           <div className='send-message'>
-            <FormControl componentClass="textarea" placeholder="Type message..." />
-            <Button bsStyle='primary'>Send</Button>
+            <form>
+              <FormControl
+                id='textarea'
+                componentClass="textarea"
+                placeholder="Type message..."
+                onChange={this.handleMessageChange}
+                onKeyPress={this.handleKeyPress}
+                value={this.state.msg} />
+              <Button bsStyle='primary' onClick={this.handleSendClick}>Send</Button>
+            </form>
           </div>
         </Panel>
       </div>
