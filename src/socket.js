@@ -4,7 +4,7 @@ module.exports = function (socket) {
   var userName = 'Guest' + Math.floor((Math.random() * 100) + 1);
   console.log(`User ${userName} connected.`);
 
-  socket.on('server:name' () => {
+  socket.on('server:name', () => {
     socket.emit('server:name', userName);
   });
 
