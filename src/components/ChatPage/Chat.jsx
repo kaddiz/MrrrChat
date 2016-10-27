@@ -18,6 +18,10 @@ if (process.env.NODE_ENV == 'production')
   pathForSocket = 'https://mrrrchat.herokuapp.com/';
 
 var socket = io.connect(pathForSocket);//, {'transports': ['xhr-polling']});
+var USER_NAME = '';
+socket.on('user:name', userName => {
+  USER_NAME = userName;
+});
 
 class Chat extends React.Component {
   constructor(props) {
@@ -26,7 +30,7 @@ class Chat extends React.Component {
     this.state = {
       messages: [],
       msg: '',
-      name: '',
+      name: USER_NAME,
       id: Date.now() + Math.random()
     }
   }
@@ -37,16 +41,16 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('user:name', this.handleUsername);
+    // socket.on('user:name', this.handleUsername);
     socket.on('message', this.handleChatMessages);
     this.props.dispatch(getMessages());
   }
 
-  handleUsername = (userName) => {
-    this.setState({
-      name: userName
-    });
-  }
+  // handleUsername = (userName) => {
+  //   this.setState({
+  //     name: userName
+  //   });
+  // }
 
   handleChatMessages = (message) => {
     this.setState({
