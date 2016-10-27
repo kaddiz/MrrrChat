@@ -10,7 +10,7 @@ module.exports = function (socket) {
     id: Date.now(),
     name: SYSTEM_NAME,
     msg: `User ${userName} has joined.`,
-    time: 0
+    time: new Date()
   });
 
   socket.on('message', (data) => {
@@ -25,7 +25,7 @@ module.exports = function (socket) {
       id: Date.now(),
       name: SYSTEM_NAME,
       msg: `User ${userName} has disconnected.`,
-      time: 0
+      time: new Date()
     });
   });
 };

@@ -43,10 +43,6 @@ class Chat extends React.Component {
   }
 
   handleChatMessages = (message) => {
-    if (message.time === 0) {
-      let NOW = new Date();
-      message.time = NOW.toLocaleTimeString();
-    }
     this.setState({
       messages: this.state.messages.concat(message),
     });
@@ -65,12 +61,11 @@ class Chat extends React.Component {
   }
 
   handleSendClick = (e) => {
-    var now = new Date();
     let message = {
       id: this.state.id,
       name: this.state.name,
       msg: this.state.msg.trim(),
-      time: now.toLocaleTimeString()
+      time: new Date()
     };
     document.getElementById('textarea').value = '';
     if (this.state.msg.trim() === '' | '\n') {
@@ -94,7 +89,12 @@ class Chat extends React.Component {
           {
             this.state.messages.length > 0 ?
             this.state.messages.map((message) => {
-              return <Message key={Math.random()} name={message.name} time={message.time} msg={message.msg} />;
+              return <Message
+                  key={Math.random()}
+                  name={message.name}
+                  time={message.time.toLocaleTimeString()} 
+                  msg={message.msg}
+                />;
             }) : <ListGroupItem>Empty message list...</ListGroupItem>
           }
           </ListGroup>
