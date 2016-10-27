@@ -8,7 +8,7 @@ import FormGroup       from 'react-bootstrap/lib/FormGroup';
 import FormControl     from 'react-bootstrap/lib/FormControl';
 import Button          from 'react-bootstrap/lib/Button';
 import Message         from './Message';
-import { getMessages } from 'redux/actions/ChatActions';
+import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
