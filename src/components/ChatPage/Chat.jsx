@@ -38,6 +38,7 @@ class Chat extends React.Component {
 
   componentDidMount() {
     socket.on('message', this.handleChatMessages);
+    socket.emit('server:name');
     socket.on('server:name', name => { this.setState({ name: name }) });
     this.props.dispatch(getMessages());
   }
@@ -92,7 +93,7 @@ class Chat extends React.Component {
               return <Message
                   key={Math.random()}
                   name={message.name}
-                  time={message.time.toLocaleTimeString()} 
+                  time={message.time.toLocaleTimeString()}
                   msg={message.msg}
                 />;
             }) : <ListGroupItem>Empty message list...</ListGroupItem>
