@@ -15,6 +15,7 @@ module.exports = function (socket) {
   socket.on('message', (data) => {
     // console.log(`${data.name}: ${data.msg}`);
     socket.broadcast.emit('message', data);
+    socket.emit('message', data);
   });
 
   socket.on('disconnect', () => {

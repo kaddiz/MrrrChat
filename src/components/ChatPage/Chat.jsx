@@ -12,7 +12,12 @@ import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
-var socket = io.connect('https://mrrrchat.herokuapp.com');//, {'transports': ['xhr-polling']});
+var pathForSocket = 'http://localhost:3000';
+
+if (process.env.NODE_ENV == 'production')
+  pathForSocket = 'https://mrrrchat.herokuapp.com:3000';
+
+var socket = io.connect(pathForSocket);//, {'transports': ['xhr-polling']});
 
 class Chat extends React.Component {
   constructor(props) {
@@ -73,7 +78,6 @@ class Chat extends React.Component {
     }
     socket.emit('message', message);
     this.setState({
-      messages: this.state.messages.concat(message),
       msg: ''
     });
   }
