@@ -1,15 +1,16 @@
+const SYSTEM_NAME = 'SYSTEM';
+
 module.exports = function (socket) {
   var userName = 'Guest' + Math.floor((Math.random() * 100) + 1);
-  var now = new Date();
   console.log(`User ${userName} connected.`);
 
   socket.emit('server:name', userName);
 
-  socket.broadcast.emit('user:join', {
+  socket.broadcast.emit('message', {
     id: Date.now(),
-    name: 'System',
+    name: SYSTEM_NAME,
     msg: `User ${userName} has joined.`,
-    time: now.toLocaleTimeString()
+    time: 0
   });
 
   socket.on('message', (data) => {
@@ -20,5 +21,11 @@ module.exports = function (socket) {
 
   socket.on('disconnect', () => {
     console.log(`User ${userName} disconnected.`);
+    socket.broadcast.emit('message', {
+      id: Date.now(),
+      name: SYSTEM_NAME,
+      msg: `User ${userName} has disconnected.`,
+      time: 0
+    });
   });
 };

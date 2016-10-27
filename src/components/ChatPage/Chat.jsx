@@ -37,13 +37,16 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('user:join', this.handleChatMessages);
     socket.on('message', this.handleChatMessages);
     socket.on('server:name', name => { this.setState({ name: name }) });
     this.props.dispatch(getMessages());
   }
 
   handleChatMessages = (message) => {
+    if (message.time === 0) {
+      let NOW = new Date();
+      message.time = NOW.toLocaleTimeString();
+    }
     this.setState({
       messages: this.state.messages.concat(message),
     });
