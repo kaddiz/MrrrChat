@@ -2,9 +2,9 @@ const express                  = require('express');
 const React                    = require('react');
 const ReactDom                 = require('react-dom/server');
 const { match, RouterContext } = require('react-router');
-const routes                   = require('./routes');
+const routes                   = require('../src/routes');
 const { Provider }             = require('react-redux');
-const configureStore           = require('./redux/configureStore');
+const configureStore           = require('../src/redux/configureStore');
 
 const app = express();
 
