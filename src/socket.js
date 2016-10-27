@@ -2,13 +2,13 @@ const SYSTEM_NAME = 'SYSTEM';
 
 module.exports = function (socket) {
 
-  socket.on('user:name', (userName) => {
-    socket.broadcast.emit('message', {
-      id: Date.now(),
-      name: SYSTEM_NAME,
-      msg: `User ${userName} has joined.`,
-      time: new Date()
-    });
+  socket.emit('user:name', `Guest${Math.floor((Math.random() * 100) + 1)}`);
+
+  socket.broadcast.emit('message', {
+    id: Date.now(),
+    name: SYSTEM_NAME,
+    msg: `User ${userName} has joined.`,
+    time: new Date()
   });
 
   socket.on('message', (data) => {
