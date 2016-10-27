@@ -29,6 +29,7 @@ class Chat extends React.Component {
       name: 'Guest' + Math.floor((Math.random() * 100) + 1),
       id: Date.now() + Math.random()
     }
+    socket.emit('user:name', this.state.name);
   }
 
   componentDidUpdate() {
@@ -37,7 +38,6 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.emit('user:name', this.state.name);
     socket.on('message', this.handleChatMessages);
     this.props.dispatch(getMessages());
   }
