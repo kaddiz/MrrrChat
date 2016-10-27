@@ -12,10 +12,10 @@ import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
-var pathForSocket = 'http://localhost:3000';
+var pathForSocket = 'http://localhost/';
 
 if (process.env.NODE_ENV == 'production')
-  pathForSocket = 'https://mrrrchat.herokuapp.com:3000';
+  pathForSocket = 'https://mrrrchat.herokuapp.com/';
 
 var socket = io.connect(pathForSocket);//, {'transports': ['xhr-polling']});
 
