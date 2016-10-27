@@ -12,7 +12,7 @@ import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
-var socket = io.connect('http://localhost:3000');//, {'transports': ['xhr-polling']});
+var socket = io.connect('http://localhost:3000', {'transports': ['xhr-polling']});
 
 class Chat extends React.Component {
   constructor(props) {
