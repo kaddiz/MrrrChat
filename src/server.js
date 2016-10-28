@@ -5,7 +5,6 @@ import { match, RouterContext } from 'react-router';
 import routes                   from './routes';
 import { Provider }             from 'react-redux';
 import configureStore           from './redux/configureStore';
-// import http                     from 'http';
 
 const app = express();
 
@@ -37,7 +36,7 @@ app.use((req, res) => {
   );
 });
 
-const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050' : '/';
+const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8050/' : '/';
 
 function renderHTML(componentHTML) {
   return `

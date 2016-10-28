@@ -12,9 +12,15 @@ import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
-var locationForSocket = `${window.location.protocol}//${window.location.host}/`;
+var socket, locationForSocket;
 
-var socket = io.connect(locationForSocket);//, {'transports': ['xhr-polling']});
+if (process.env.NODE_ENV === 'production') {
+  locationForSocket = `${window.location.protocol}//${window.location.host}/`;
+  socket = io.connect(locationForSocket);
+} else {
+  locationForSocket = 'http://localhost:3000/';
+  socket = io.connect(locationForSocket);//, {'transports': ['xhr-polling']});
+}
 var USER_NAME = '';
 socket.on('user:name', userName => {
   USER_NAME = userName;
@@ -41,7 +47,7 @@ class Chat extends React.Component {
     socket.on('message', this.handleChatMessages);
     this.props.dispatch(getMessages());
     this.setState({
-      name: USER_NAME 
+      name: USER_NAME
     });
   }
 
