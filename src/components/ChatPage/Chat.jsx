@@ -38,16 +38,9 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    // socket.on('user:name', this.handleUsername);
     socket.on('message', this.handleChatMessages);
     this.props.dispatch(getMessages());
   }
-
-  // handleUsername = (userName) => {
-  //   this.setState({
-  //     name: userName
-  //   });
-  // }
 
   handleChatMessages = (message) => {
     this.setState({
@@ -74,7 +67,6 @@ class Chat extends React.Component {
       msg: this.state.msg.trim(),
       time: new Date()
     }
-    // e.target.reset();
     if (this.state.msg.trim() === '' | '\n') {
       this.setState({
         msg: ''
@@ -99,7 +91,7 @@ class Chat extends React.Component {
               return <Message
                   key={Math.random()}
                   name={message.name}
-                  time={message.time.toLocaleTimeString()}
+                  time={typeof message.time === Date ? message.time.toLocaleTimeString() : message.time}
                   msg={message.msg}
                 />;
             }) : <ListGroupItem>Empty message list...</ListGroupItem>
@@ -113,7 +105,8 @@ class Chat extends React.Component {
                 placeholder="Type message..."
                 onChange={this.handleMessageChange}
                 onKeyPress={this.handleKeyPress}
-                value={this.state.msg} />
+                value={this.state.msg}
+              />
               <Button bsStyle='primary' onClick={this.handleSendClick}>Send</Button>
             </form>
           </div>
