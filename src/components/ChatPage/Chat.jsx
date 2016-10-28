@@ -12,12 +12,9 @@ import { getMessages } from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
 
-var pathForSocket = 'http://localhost/';
+var locationForSocket = `${window.location.protocol}//${window.location.host}/`;
 
-if (process.env.NODE_ENV == 'production')
-  pathForSocket = 'https://mrrrchat.herokuapp.com/';
-
-var socket = io.connect(pathForSocket);//, {'transports': ['xhr-polling']});
+var socket = io.connect(locationForSocket);//, {'transports': ['xhr-polling']});
 var USER_NAME = '';
 socket.on('user:name', userName => {
   USER_NAME = userName;
@@ -60,7 +57,7 @@ class Chat extends React.Component {
 
   handleMessageChange = (e) => {
     this.setState({
-      msg: e.target.value
+      msg: e.target.value.trim()
     });
   }
 
@@ -74,10 +71,10 @@ class Chat extends React.Component {
     let message = {
       id: this.state.id,
       name: this.state.name,
-      msg: this.state.msg.trim(),
+      msg: this.state.msg,
       time: new Date()
-    };
-    document.getElementById('textarea').value = '';
+    }
+    e.target.reset();
     if (this.state.msg.trim() === '' | '\n') {
       this.setState({
         msg: ''
