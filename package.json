@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "set NODE_ENV=production && webpack --config webpack.config.prod.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "build:watch": "webpack --config webpack.config.prod.js --watch",
     "nodemon": "set NODE_PATH=./src; && nodemon server.js",
     "start": "concurrently \"npm run dev\" \"npm run nodemon\"",
     "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --debug --hot --output-pathinfo --watch --colors --inline --content-base src --port 8050 --host 0.0.0.0"
