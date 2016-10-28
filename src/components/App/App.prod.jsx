@@ -37,7 +37,7 @@ export default class App extends React.Component {
           {this.props.children}
           <div className='status'>
             <h2>Status of progress:</h2>
-            <ProgressBar active now={55} />
+            <ProgressBar active now={33} />
           </div>
         </Grid>
       </div>
