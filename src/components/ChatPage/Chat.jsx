@@ -57,7 +57,7 @@ class Chat extends React.Component {
 
   handleMessageChange = (e) => {
     this.setState({
-      msg: e.target.value.trim()
+      msg: e.target.value
     });
   }
 
@@ -71,10 +71,10 @@ class Chat extends React.Component {
     let message = {
       id: this.state.id,
       name: this.state.name,
-      msg: this.state.msg,
+      msg: this.state.msg.trim(),
       time: new Date()
     }
-    e.target.reset();
+    // e.target.reset();
     if (this.state.msg.trim() === '' | '\n') {
       this.setState({
         msg: ''
