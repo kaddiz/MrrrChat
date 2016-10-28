@@ -40,6 +40,9 @@ class Chat extends React.Component {
   componentDidMount() {
     socket.on('message', this.handleChatMessages);
     this.props.dispatch(getMessages());
+    this.setState({
+      name: USER_NAME 
+    });
   }
 
   handleChatMessages = (message) => {
@@ -83,7 +86,7 @@ class Chat extends React.Component {
     var chatName = 'Default';
     return (
       <div className='chat'>
-        <Panel header={'Chat: ' + chatName} footer={'Name: ' + this.state.name} bsStyle='primary'>
+        <Panel header={'Room: ' + chatName} footer={'Name: ' + this.state.name} bsStyle='primary'>
           <ListGroup fill id='chat'>
           {
             this.state.messages.length > 0 ?
