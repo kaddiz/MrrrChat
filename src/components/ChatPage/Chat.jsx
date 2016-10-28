@@ -83,7 +83,7 @@ class Chat extends React.Component {
     var chatName = 'Default';
     return (
       <div className='chat'>
-        <Panel header={chatName} bsStyle='primary'>
+        <Panel header={'Chat: ' + chatName} footer={'Name: ' + this.state.name} bsStyle='primary'>
           <ListGroup fill id='chat'>
           {
             this.state.messages.length > 0 ?
