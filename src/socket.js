@@ -2,6 +2,7 @@ const SYSTEM_NAME = 'SYSTEM';
 
 module.exports = function (socket) {
   const userName = 'Guest' + Math.floor((Math.random() * 100) + 1);
+  console.log(`User ${userName} connect.`);
 
   socket.emit('user:name', userName);
 
