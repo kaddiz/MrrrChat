@@ -1,7 +1,10 @@
-.status {
-  background-color: #eee;
+.girls {
   padding: 10px 30px;
   border-radius: 6px;
   margin-top: 10px;
   margin-bottom: 10px;
+  img {
+    max-width: 100%;
+    background-size: cover;
+  }
 }

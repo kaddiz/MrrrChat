@@ -10,6 +10,8 @@ import { Link }             from 'react-router';
 import './bootstrap.css';
 import './App.scss';
 
+import girlsImage           from '../../images/girls.jpg';
+
 export default class App extends React.Component {
   static propTypes = {
     children: React.PropTypes.node
@@ -35,9 +37,8 @@ export default class App extends React.Component {
         </Navbar>
         <Grid>
           {this.props.children}
-          <div className='status'>
-            <h2>Status of progress:</h2>
-            <ProgressBar active now={33} />
+          <div className='girls'>
+            <img src={girlsImage} alt='girlsImage' />
           </div>
         </Grid>
       </div>
