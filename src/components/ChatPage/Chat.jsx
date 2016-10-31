@@ -37,10 +37,6 @@ class Chat extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.socket.emit('disconnect');
-  }
-
   componentDidMount() {
     this.props.socket.on('message', this.handleChatMessages);
   }
@@ -91,10 +87,9 @@ class Chat extends React.Component {
   }
 
   render() {
-    var chatName = 'Default';
     return (
       <div className='chat'>
-        <Panel header={'Room: ' + chatName} footer={'Name: ' + this.props.userName} bsStyle='primary'>
+        <Panel header={'Room: ' + this.props.room} footer={'Name: ' + this.props.userName} bsStyle='primary'>
           <ListGroup fill id='chat'>
           {
             this.props.messages.length > 0 ?
