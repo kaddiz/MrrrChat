@@ -4,14 +4,14 @@ var userList = [];
 
 module.exports = function (socket) {
   const userName = 'Guest' + Math.floor((Math.random() * 100) + 1);
-  userList.push(userName);
-
-  console.log(`User ${userName} connect.`);
-  console.log(userList);
 
   socket.on('user:name', () => {
+    userList.push(userName);
     socket.emit('user:name', userName);
   });
+  
+  console.log(`User ${userName} connect.`);
+  console.log(userList);
 
   socket.broadcast.emit('message', {
     id: Date.now(),
@@ -37,7 +37,7 @@ module.exports = function (socket) {
     console.log(`User ${userName} disconnected.`);
     console.log(userList);
 
-    socket.broadcast.emit('user:list', userList);  
+    socket.broadcast.emit('user:list', userList);
 
     socket.broadcast.emit('message', {
       id: Date.now(),
