@@ -6,6 +6,7 @@ import { Provider }               from 'react-redux';
 import configureStore             from './redux/configureStore';
 
 import './variables.scss';
+import './_grid.scss';
 
 const store = configureStore();
 
