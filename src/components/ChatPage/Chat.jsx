@@ -42,7 +42,7 @@ class Chat extends React.Component {
 
   componentDidUpdate() {
     var chat = document.getElementById('chat');
-    chat.scrollTop = chat.scrollHeight;
+    if (chat) chat.scrollTop = chat.scrollHeight;
   }
 
   handleChatMessages = (message) => {

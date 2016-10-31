@@ -22,7 +22,7 @@ module.exports = function (socket) {
 
   socket.on('user:list', () => {
     socket.emit('user:list', userList);
-    socket.broadcast.emit('user:list', userList);    
+    socket.broadcast.emit('user:list', userList);
   });
 
   socket.on('message', (data) => {
@@ -36,6 +36,8 @@ module.exports = function (socket) {
 
     console.log(`User ${userName} disconnected.`);
     console.log(userList);
+
+    socket.broadcast.emit('user:list', userList);  
 
     socket.broadcast.emit('message', {
       id: Date.now(),

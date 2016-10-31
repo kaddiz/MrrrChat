@@ -1,15 +1,16 @@
-import React from 'react';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Panel from 'react-bootstrap/lib/Panel';
+import React           from 'react';
+import { connect }     from 'react-redux';
+import ListGroup       from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem   from 'react-bootstrap/lib/ListGroupItem';
+import Panel           from 'react-bootstrap/lib/Panel';
+import {
+  setUserList,
+  getUserList
+}                      from '../../redux/actions/UserListActions';
 
-export default class UserList extends React.Component {
+class UserList extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      users: []
-    }
   }
 
   componentWillMount() {
@@ -18,9 +19,7 @@ export default class UserList extends React.Component {
   }
 
   handleUserList = (userList) => {
-    this.setState({
-      users: userList
-    });
+    this.props.dispatch(setUserList(userList));
   }
 
   render() {
@@ -29,9 +28,10 @@ export default class UserList extends React.Component {
         <Panel header='User list' bsStyle='primary'>
           <ListGroup fill>
           {
-            this.state.users.map((item, index) => {
-              return <ListGroupItem key={index}>{item}</ListGroupItem>;
-            })
+            this.props.users.length > 0 ?
+            this.props.users.map((userName, index) => {
+              return <ListGroupItem key={index}>{userName}</ListGroupItem>;
+            }) : <ListGroupItem>Empty user list...</ListGroupItem>
           }
           </ListGroup>
         </Panel>
@@ -39,3 +39,11 @@ export default class UserList extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { users } = state.users;
+
+  return { users };
+}
+
+export default connect(mapStateToProps)(UserList);
