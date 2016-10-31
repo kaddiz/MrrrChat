@@ -24,20 +24,21 @@ class Chat extends React.Component {
   }
 
   componentWillMount() {
-    this.props.socket.emit('user:name');
-    this.props.socket.on('user:name', userName => {
-      this.props.dispatch(
-        setDefaultProps(
-          Date.now() + Math.random(),
-          userName
-        )
-      );
-    });
+    if (this.props.id === 0) {
+      this.props.socket.emit('user:name');
+      this.props.socket.on('user:name', userName => {
+        this.props.dispatch(
+          setDefaultProps(
+            Date.now() + Math.random(),
+            userName
+          )
+        );
+      });
+    }
   }
 
   componentDidMount() {
     this.props.socket.on('message', this.handleChatMessages);
-    // this.props.dispatch(getMessages());
   }
 
   componentDidUpdate() {
@@ -65,6 +66,7 @@ class Chat extends React.Component {
   }
 
   handleSendClick = (e) => {
+    e.preventDefault();
     const NOW = new Date();
     let message = {
       id: this.props.id,
@@ -85,10 +87,9 @@ class Chat extends React.Component {
   }
 
   render() {
-    var chatName = 'Default';
     return (
       <div className='chat'>
-        <Panel header={'Room: ' + chatName} footer={'Name: ' + this.props.userName} bsStyle='primary'>
+        <Panel header={'Room: ' + this.props.room} footer={'Name: ' + this.props.userName} bsStyle='primary'>
           <ListGroup fill id='chat'>
           {
             this.props.messages.length > 0 ?
@@ -122,9 +123,9 @@ class Chat extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { id, userName, messages } = state.chat;
+  const { id, userName, messages, room } = state.chat;
 
-  return { id, userName, messages };
+  return { id, userName, messages, room };
 }
 
 export default connect(mapStateToProps)(Chat);

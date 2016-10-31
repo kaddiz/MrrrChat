@@ -8,6 +8,7 @@ import {
 const initialState = {
    id: 0,
    userName: 'USER_NAME',
+   room: 'Default',
    messages: []
  };
 
@@ -21,7 +22,7 @@ export default function (state = initialState, action) {
 
     case ADD_NEW_MESSAGE:
       return {...state, messages: state.messages.concat(action.payload) }
-      
+
     default:
       return state;
   }
