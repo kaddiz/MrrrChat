@@ -1,6 +1,5 @@
 import React           from 'react';
 import { connect }     from 'react-redux';
-import io              from 'socket.io-client';
 import ListGroup       from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem   from 'react-bootstrap/lib/ListGroupItem';
 import Panel           from 'react-bootstrap/lib/Panel';
@@ -8,34 +7,37 @@ import FormGroup       from 'react-bootstrap/lib/FormGroup';
 import FormControl     from 'react-bootstrap/lib/FormControl';
 import Button          from 'react-bootstrap/lib/Button';
 import Message         from './Message';
-import { getMessages } from '../../redux/actions/ChatActions';
+import {
+  setDefaultProps,
+  getMessages,
+  addNewMessage
+}                      from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
-
-var socket, locationForSocket;
-
-if (process.env.NODE_ENV === 'production') {
-  locationForSocket = `${window.location.protocol}//${window.location.host}/`;
-  socket = io.connect(locationForSocket);
-} else {
-  locationForSocket = 'http://localhost:3000/';
-  socket = io.connect(locationForSocket);//, {'transports': ['xhr-polling']});
-}
-var USER_NAME = '';
-socket.on('user:name', userName => {
-  USER_NAME = userName;
-});
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      messages: [],
-      msg: '',
-      name: USER_NAME,
-      id: Date.now() + Math.random()
+      messageText: ''
     }
+  }
+
+  componentWillMount() {
+    this.props.socket.emit('user:name');
+    this.props.socket.on('user:name', userName => {
+      this.props.dispatch(
+        setDefaultProps(
+          Date.now() + Math.random(),
+          userName
+        )
+      );
+    });
+  }
+
+  componentDidMount() {
+    this.props.socket.on('message', this.handleChatMessages);
+    // this.props.dispatch(getMessages());
   }
 
   componentDidUpdate() {
@@ -43,23 +45,16 @@ class Chat extends React.Component {
     chat.scrollTop = chat.scrollHeight;
   }
 
-  componentDidMount() {
-    socket.on('message', this.handleChatMessages);
-    this.props.dispatch(getMessages());
-    this.setState({
-      name: USER_NAME
-    });
-  }
-
   handleChatMessages = (message) => {
-    this.setState({
-      messages: this.state.messages.concat(message),
-    });
+    const NOW = new Date();
+    this.props.dispatch(addNewMessage(
+      {...message, time: NOW.toLocaleTimeString() }
+    ));
   }
 
   handleMessageChange = (e) => {
     this.setState({
-      msg: e.target.value
+      messageText: e.target.value
     });
   }
 
@@ -70,21 +65,22 @@ class Chat extends React.Component {
   }
 
   handleSendClick = (e) => {
+    const NOW = new Date();
     let message = {
-      id: this.state.id,
-      name: this.state.name,
-      msg: this.state.msg.trim(),
-      time: new Date()
+      id: this.props.id,
+      name: this.props.userName,
+      msg: this.state.messageText.trim(),
+      time: NOW.toLocaleTimeString()
     }
-    if (this.state.msg.trim() === '' | '\n') {
+    if (this.state.messageText.trim() === '' | '\n') {
       this.setState({
-        msg: ''
+        messageText: ''
       });
       return false;
     }
-    socket.emit('message', message);
+    this.props.socket.emit('message', message);
     this.setState({
-      msg: ''
+      messageText: ''
     });
   }
 
@@ -92,15 +88,15 @@ class Chat extends React.Component {
     var chatName = 'Default';
     return (
       <div className='chat'>
-        <Panel header={'Room: ' + chatName} footer={'Name: ' + this.state.name} bsStyle='primary'>
+        <Panel header={'Room: ' + chatName} footer={'Name: ' + this.props.userName} bsStyle='primary'>
           <ListGroup fill id='chat'>
           {
-            this.state.messages.length > 0 ?
-            this.state.messages.map((message) => {
+            this.props.messages.length > 0 ?
+            this.props.messages.map((message) => {
               return <Message
                   key={Math.random()}
                   name={message.name}
-                  time={typeof message.time === Date ? message.time.toLocaleTimeString() : message.time}
+                  time={message.time}
                   msg={message.msg}
                 />;
             }) : <ListGroupItem>Empty message list...</ListGroupItem>
@@ -114,7 +110,7 @@ class Chat extends React.Component {
                 placeholder="Type message..."
                 onChange={this.handleMessageChange}
                 onKeyPress={this.handleKeyPress}
-                value={this.state.msg}
+                value={this.state.messageText}
               />
               <Button bsStyle='primary' onClick={this.handleSendClick}>Send</Button>
             </form>
@@ -126,9 +122,9 @@ class Chat extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { id, name, msg, time } = state.chat;
+  const { id, userName, messages } = state.chat;
 
-  return { id, name, msg, time };
+  return { id, userName, messages };
 }
 
 export default connect(mapStateToProps)(Chat);
