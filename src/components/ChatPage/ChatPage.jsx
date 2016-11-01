@@ -1,10 +1,8 @@
 import React          from 'react';
+import Paper          from 'material-ui/Paper';
 import io             from 'socket.io-client';
-import UserList       from './UserList';
+import RoomList       from './RoomList';
 import Chat           from './Chat';
-import PageHeader     from 'react-bootstrap/lib/PageHeader';
-import Col            from 'react-bootstrap/lib/Col';
-import Row            from 'react-bootstrap/lib/Row';
 
 import './ChatPage.scss';
 
@@ -24,14 +22,18 @@ export default class ChatPage extends React.Component {
   render() {
     return (
       <div className='chat-page'>
-        <h1>MrrrChat</h1>
-        <Row className="show-grid">
-          <Col xs={12} md={8}><Chat socket={this.state.socket} /></Col>
-          <Col xs={12} md={4}><UserList socket={this.state.socket} /></Col>
-        </Row>
+          <div className="row row--no-gutter">
+            <div className='col col--8-of-12'><Chat socket={this.state.socket} /></div>
+            <div className='col col--4-of-12'><RoomList socket={this.state.socket} /></div>
+          </div>
       </div>
     );
   }
 }
 
-// <PageHeader>MrrrChat <small>Just choose a room</small></PageHeader>
+// <Paper className='chat-page' zDepth={1} rounded={false}>
+
+
+
+
+// </Paper>

@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px/1.5 'Lato', sans-serif;
+}
+
+.link, .link:hover, .link:focus {
+  color: #212121;
+  text-decoration: none;
+}

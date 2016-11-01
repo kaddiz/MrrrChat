@@ -3,42 +3,25 @@
   .author-name-div {
     b {
       font-size: 1.1em;
-      color: #18bc9c;
+      color: #42A5F5;//#00BCD4; //#18bc9c;
     }
     span {
       font-size: 0.9em;
       padding: 0 5px;
       color: darken(#ecf0f1, 25);
     }
-    margin: 3px 0;
-  }
-
-  .list-group {
-    height: 380px;
-    overflow: auto;
-  }
-
-  .panel-body {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    padding: 10px;
+    margin: 5px 0;
   }
 
   .send-message {
+    border-top: 1px solid #42A5F5;//#00BCD4;
     position: relative;
-    textarea {
-      display: inline-block;
-      width: 80%;
-    }
-    button {
-      width: 18%;
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 92%;
-      text-align: center;
-      padding-left: 0;
-      padding-right: 0;
+    min-height: 120px;
+
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
     }
   }
 
