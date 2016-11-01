@@ -19,7 +19,7 @@ const style = {
     paddingTop: 10,
     paddingLeft: 15,
     paddingBottom: 10,
-    backgroundColor: '#00BCD4',
+    backgroundColor: '#42A5F5',//'#00BCD4',
     color: '#fff'
   },
   textField: {
@@ -112,7 +112,7 @@ class Chat extends React.Component {
   render() {
     return (
       <div className='chat'>
-        <Paper zDepth={1} rounded={false}>
+        <Paper zDepth={1} rounded={false} style={{backgroundColor: '#FAFAFA'}}>
           <h2 style={style.roomName}>Room: {this.props.room}</h2>
           <List id='chat' style={style.messageList}>
           {
