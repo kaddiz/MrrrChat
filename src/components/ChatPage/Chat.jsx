@@ -1,19 +1,42 @@
-import React           from 'react';
-import { connect }     from 'react-redux';
-import ListGroup       from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem   from 'react-bootstrap/lib/ListGroupItem';
-import Panel           from 'react-bootstrap/lib/Panel';
-import FormGroup       from 'react-bootstrap/lib/FormGroup';
-import FormControl     from 'react-bootstrap/lib/FormControl';
-import Button          from 'react-bootstrap/lib/Button';
-import Message         from './Message';
+import React            from 'react';
+import { connect }      from 'react-redux';
+import {List, ListItem} from 'material-ui/List';
+import TextField        from 'material-ui/TextField';
+import RaisedButton     from 'material-ui/RaisedButton';
+import Paper            from 'material-ui/Paper';
+import Message          from './Message';
 import {
   setDefaultProps,
   getMessages,
   addNewMessage
-}                      from '../../redux/actions/ChatActions';
+}                       from '../../redux/actions/ChatActions';
 
 import './Chat.scss';
+
+const style = {
+  roomName: {
+    margin: 0,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingBottom: 10,
+    backgroundColor: '#00BCD4',
+    color: '#fff'
+  },
+  textField: {
+    width: '96%',
+    marginLeft: '2%',
+    marginTop: 10
+  },
+  sendButton: {
+    position: 'absolute',
+    top: 60,
+    right: 10
+  },
+  messageList: {
+    height: '380px',
+    overflow: 'auto'
+  }
+}
 
 class Chat extends React.Component {
   constructor(props) {
@@ -89,8 +112,9 @@ class Chat extends React.Component {
   render() {
     return (
       <div className='chat'>
-        <Panel header={'Room: ' + this.props.room} footer={'Name: ' + this.props.userName} bsStyle='primary'>
-          <ListGroup fill id='chat'>
+        <Paper zDepth={1} rounded={false}>
+          <h2 style={style.roomName}>Room: {this.props.room}</h2>
+          <List id='chat' style={style.messageList}>
           {
             this.props.messages.length > 0 ?
             this.props.messages.map((message) => {
@@ -100,23 +124,29 @@ class Chat extends React.Component {
                   time={message.time}
                   msg={message.msg}
                 />;
-            }) : <ListGroupItem>Empty message list...</ListGroupItem>
+            }) : <ListItem>Empty message list...</ListItem>
           }
-          </ListGroup>
+          </List>
           <div className='send-message'>
-            <form>
-              <FormControl
-                id='textarea'
-                componentClass="textarea"
-                placeholder="Type message..."
-                onChange={this.handleMessageChange}
-                onKeyPress={this.handleKeyPress}
-                value={this.state.messageText}
-              />
-              <Button bsStyle='primary' onClick={this.handleSendClick}>Send</Button>
-            </form>
+            <TextField
+              style={style.textField}
+              hintText="Type message..."
+              multiLine={true}
+              rowsMax={3}
+              fullWidth={true}
+              onChange={this.handleMessageChange}
+              onKeyPress={this.handleKeyPress}
+              value={this.state.messageText}
+            />
+            <RaisedButton
+              style={style.sendButton}
+              label="Send"
+              primary={true}
+              href='/chat'
+              onClick={this.handleSendClick}
+            />
           </div>
-        </Panel>
+        </Paper>
       </div>
     );
   }
@@ -127,5 +157,14 @@ function mapStateToProps(state) {
 
   return { id, userName, messages, room };
 }
+
+// <FormControl
+//   id='textarea'
+//   componentClass="textarea"
+//   placeholder="Type message..."
+//   onChange={this.handleMessageChange}
+//   onKeyPress={this.handleKeyPress}
+//   value={this.state.messageText}
+// />
 
 export default connect(mapStateToProps)(Chat);

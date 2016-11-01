@@ -1,4 +1,5 @@
 import React          from 'react';
+import Paper          from 'material-ui/Paper';
 import io             from 'socket.io-client';
 import UserList       from './UserList';
 import Chat           from './Chat';
@@ -21,12 +22,18 @@ export default class ChatPage extends React.Component {
   render() {
     return (
       <div className='chat-page'>
-        <h1>MrrrChat</h1>
-        <div className="row row--no-gutter">
-          <div className='col col--8-of-12'><Chat socket={this.state.socket} /></div>
-          <div className='col col--4-of-12'><UserList socket={this.state.socket} /></div>
-        </div>
+          <div className="row row--no-gutter">
+            <div className='col col--8-of-12'><Chat socket={this.state.socket} /></div>
+            <div className='col col--4-of-12'><UserList socket={this.state.socket} /></div>
+          </div>
       </div>
     );
   }
 }
+
+// <Paper className='chat-page' zDepth={1} rounded={false}>
+
+
+
+
+// </Paper>
