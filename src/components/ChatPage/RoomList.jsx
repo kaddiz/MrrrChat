@@ -7,7 +7,7 @@ import './RoomList.scss';
 const style = {
   margin: 0,
   paddingTop: 10,
-  paddingLeft: 15,
+  textAlign: 'center',
   paddingBottom: 10,
   backgroundColor: '#42A5F5',//'#00BCD4',
   color: '#fff'

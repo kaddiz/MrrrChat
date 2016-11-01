@@ -10,8 +10,8 @@ export default class ChatPage extends React.Component {
     return (
       <div className='chat-page'>
           <div className="row row--no-gutter">
-            <div className='col col--8-of-12'><Chat /></div>
-            <div className='col col--4-of-12'><RoomList /></div>
+            <div className='col col--4-of-5'><Chat /></div>
+            <div className='col col--1-of-5'><RoomList /></div>
           </div>
       </div>
     );
