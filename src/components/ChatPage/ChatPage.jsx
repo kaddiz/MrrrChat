@@ -1,7 +1,7 @@
 import React          from 'react';
 import Paper          from 'material-ui/Paper';
 import io             from 'socket.io-client';
-import UserList       from './UserList';
+import RoomList       from './RoomList';
 import Chat           from './Chat';
 
 import './ChatPage.scss';
@@ -24,7 +24,7 @@ export default class ChatPage extends React.Component {
       <div className='chat-page'>
           <div className="row row--no-gutter">
             <div className='col col--8-of-12'><Chat socket={this.state.socket} /></div>
-            <div className='col col--4-of-12'><UserList socket={this.state.socket} /></div>
+            <div className='col col--4-of-12'><RoomList socket={this.state.socket} /></div>
           </div>
       </div>
     );

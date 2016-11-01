@@ -25,11 +25,11 @@ const style = {
   textField: {
     width: '96%',
     marginLeft: '2%',
-    marginTop: 10
+    // marginTop: 10
   },
   sendButton: {
     position: 'absolute',
-    top: 60,
+    top: 74,
     right: 10
   },
   messageList: {
@@ -130,7 +130,7 @@ class Chat extends React.Component {
           <div className='send-message'>
             <TextField
               style={style.textField}
-              hintText="Type message..."
+              floatingLabelText="Type message..."
               multiLine={true}
               rowsMax={3}
               fullWidth={true}

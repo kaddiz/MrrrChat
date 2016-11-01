@@ -1,22 +1,37 @@
-import React from 'react';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Badge from 'react-bootstrap/lib/Badge';
-import Panel from 'react-bootstrap/lib/Panel';
+import React              from 'react';
+import Paper              from 'material-ui/Paper';
+import { List, ListItem } from 'material-ui/List';
+import Badge              from 'material-ui/Badge';
 
 import './RoomList.scss';
+
+const style = {
+  margin: 0,
+  paddingTop: 10,
+  paddingLeft: 15,
+  paddingBottom: 10,
+  backgroundColor: '#00BCD4',
+  color: '#fff'
+}
 
 export default class RoomList extends React.Component {
   render() {
     return (
       <div className='room-list'>
-        <Panel header='Room list' bsStyle='primary'>
-          <ListGroup fill>
-            <ListGroupItem href="#">Link 2 <Badge>12</Badge></ListGroupItem>
-            <ListGroupItem href="#" active>Link 1 <Badge>12</Badge></ListGroupItem>
-            <ListGroupItem href="#">Link 3 <Badge>12</Badge></ListGroupItem>
-          </ListGroup>
-        </Panel>
+        <Paper zDepth={1} rounded={false}>
+          <h2 style={style}>Room list</h2>
+          <List>
+            <ListItem>
+              Room 2 <Badge badgeContent={4} primary={true}></Badge>
+            </ListItem>
+            <ListItem>
+              Room 1 <Badge badgeContent={12} primary={true}></Badge>
+            </ListItem>
+            <ListItem>
+              Room 3 <Badge badgeContent={8} primary={true}></Badge>
+            </ListItem>
+          </List>
+        </Paper>
       </div>
     );
   }

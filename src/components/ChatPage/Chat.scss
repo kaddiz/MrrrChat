@@ -10,13 +10,13 @@
       padding: 0 5px;
       color: darken(#ecf0f1, 25);
     }
-    margin: 3px 0;
+    margin: 5px 0;
   }
 
   .send-message {
     border-top: 1px solid #00BCD4;
     position: relative;
-    min-height: 107px;
+    min-height: 120px;
 
     &::after {
       content: '';
