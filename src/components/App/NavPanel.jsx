@@ -33,10 +33,7 @@ export default class NavPanel extends Component {
   render() {
     return (
       <div>
-        <AppBar
-          title="MrrrChat"
-          iconElementRight={<Menu />}
-        />
+        <AppBar title="MrrrChat" iconElementRight={<Menu />} />
       </div>
     );
   }

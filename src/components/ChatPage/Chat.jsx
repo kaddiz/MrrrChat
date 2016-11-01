@@ -1,5 +1,6 @@
 import React            from 'react';
 import { connect }      from 'react-redux';
+import io               from 'socket.io-client';
 import {List, ListItem} from 'material-ui/List';
 import TextField        from 'material-ui/TextField';
 import RaisedButton     from 'material-ui/RaisedButton';
@@ -10,6 +11,10 @@ import {
   getMessages,
   addNewMessage
 }                       from '../../redux/actions/ChatActions';
+
+const SOCKET_LOCATION = process.env.NODE_ENV === 'production'
+  ? `${window.location.protocol}//${window.location.host}/`
+  : 'http://localhost:3000/';
 
 import './Chat.scss';
 
@@ -42,14 +47,15 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      socket: io.connect(SOCKET_LOCATION),
       messageText: ''
     }
+    this.state.socket.emit('user:name');
   }
 
   componentWillMount() {
     if (this.props.id === 0) {
-      this.props.socket.emit('user:name');
-      this.props.socket.on('user:name', userName => {
+      this.state.socket.on('user:name', userName => {
         this.props.dispatch(
           setDefaultProps(
             Date.now() + Math.random(),
@@ -61,7 +67,7 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    this.props.socket.on('message', this.handleChatMessages);
+    this.state.socket.on('message', this.handleChatMessages);
   }
 
   componentDidUpdate() {
@@ -103,7 +109,7 @@ class Chat extends React.Component {
       });
       return false;
     }
-    this.props.socket.emit('message', message);
+    this.state.socket.emit('message', message);
     this.setState({
       messageText: ''
     });
@@ -157,14 +163,5 @@ function mapStateToProps(state) {
 
   return { id, userName, messages, room };
 }
-
-// <FormControl
-//   id='textarea'
-//   componentClass="textarea"
-//   placeholder="Type message..."
-//   onChange={this.handleMessageChange}
-//   onKeyPress={this.handleKeyPress}
-//   value={this.state.messageText}
-// />
 
 export default connect(mapStateToProps)(Chat);

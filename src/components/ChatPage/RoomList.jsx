@@ -1,7 +1,6 @@
 import React              from 'react';
 import Paper              from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
-import Badge              from 'material-ui/Badge';
 
 import './RoomList.scss';
 
@@ -21,15 +20,9 @@ export default class RoomList extends React.Component {
         <Paper zDepth={1} rounded={false} style={{backgroundColor: '#FAFAFA'}}>
           <h2 style={style}>Room list</h2>
           <List>
-            <ListItem>
-              Room 2 <Badge badgeContent={4} primary={true}></Badge>
-            </ListItem>
-            <ListItem>
-              Room 1 <Badge badgeContent={12} primary={true}></Badge>
-            </ListItem>
-            <ListItem>
-              Room 3 <Badge badgeContent={8} primary={true}></Badge>
-            </ListItem>
+            <ListItem>Room 2</ListItem>
+            <ListItem>Room 1</ListItem>
+            <ListItem>Room 3</ListItem>
           </List>
         </Paper>
       </div>

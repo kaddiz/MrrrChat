@@ -14,15 +14,9 @@
   }
 
   .send-message {
-    border-top: 1px solid #42A5F5;//#00BCD4;
+    border-top: 2px solid #42A5F5;//#00BCD4;
     position: relative;
     min-height: 120px;
-
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
   }
 
 }

@@ -7,16 +7,15 @@ module.exports = function (socket) {
 
   socket.on('user:name', () => {
     socket.emit('user:name', userName);
+    socket.broadcast.emit('message', {
+      id: Date.now(),
+      name: SYSTEM_NAME,
+      msg: `User ${userName} has joined.`,
+      time: new Date()
+    });
   });
 
   console.log(`User ${userName} connect.`);
-
-  socket.broadcast.emit('message', {
-    id: Date.now(),
-    name: SYSTEM_NAME,
-    msg: `User ${userName} has joined.`,
-    time: new Date()
-  });
 
   socket.on('user:list', () => {
     socket.emit('user:list', userList);
